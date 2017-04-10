@@ -1,6 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthenticationService {
@@ -32,7 +33,7 @@ export class AuthenticationService {
                 if (token) {
                     // set token property
                     this.token = response.json();
-
+                    var decoded = jwt_decode(this.token.access_token);
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
 
